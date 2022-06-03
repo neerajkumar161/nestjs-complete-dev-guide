@@ -3,11 +3,28 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test2@test.com",
+  "email": "test3@test.com",
   "name": "Neeraj",
   "password": "1234",
   "extraproperty": "I'm Extra!!"
 }
+
+### Login user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test3@test.com",
+  "password": "1234"
+}
+
+### Logout
+POST  http://localhost:3000/auth/logout
+Content-Type: application/json
+
+### WhoAmI
+GET  http://localhost:3000/auth/whoami
+
 
 ### Update the user
 PATCH  http://localhost:3000/auth/1
