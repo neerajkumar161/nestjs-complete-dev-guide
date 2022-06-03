@@ -10,7 +10,6 @@ export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
   create(createUserDto: CreateUserDto) {
-    console.log(createUserDto)
     const user = this.repo.create(createUserDto) // Recommended, help with Entity Validation (Hooks) etc
     return this.repo.save(user)
   }
@@ -19,8 +18,13 @@ export class UsersService {
     return await this.repo.find()
   }
 
+  async find(userDto: Partial<User>) {
+    return await this.repo.findOneBy({ email: userDto.email })
+  }
+
   async findOne(id: number): Promise<User> {
-    const user = await this.repo.findOneBy({ id })
+    if (!id) return null
+    const user = await this.repo.findOne({ where: { id } })
     if (!user) throw new NotFoundException('No User Exists!')
 
     return user
