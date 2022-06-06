@@ -9,7 +9,7 @@ import { User } from './entities/user.entity'
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
-  create(createUserDto: CreateUserDto) {
+  create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.repo.create(createUserDto) // Recommended, help with Entity Validation (Hooks) etc
     return this.repo.save(user)
   }
