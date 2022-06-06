@@ -18,7 +18,19 @@ export class ReportsService {
   }
 
   getEstimate(getEstimateDto: GetEstimateDto) {
-    return `This action returns all reports`
+    return this.repo
+      .createQueryBuilder()
+      .select('AVG(price)', 'price')
+      .where('make = :make', { make: getEstimateDto.make })
+      .andWhere('model = :model', { model: getEstimateDto.model })
+      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng: getEstimateDto.lng })
+      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat: getEstimateDto.lat })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year: getEstimateDto.year })
+      .andWhere('approved IS TRUE')
+      .orderBy('ABS(mileage - :mileage)', 'DESC')
+      .setParameters({ mileage: getEstimateDto.mileage })
+      .limit(3)
+      .getRawOne()
   }
 
   findOne(id: number) {

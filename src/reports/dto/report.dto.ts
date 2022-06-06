@@ -31,10 +31,7 @@ export class ReportDto extends PartialType(Report) {
   @Exclude()
   user?: User
 
-  @Transform(({ obj }) => {
-    console.log({ obj })
-    return obj.user.id
-  }) // return the user.id and pass to userId
+  @Transform(({ obj }) => obj.user.id) // return the user.id and pass to userId
   @Expose()
   userId: number
 

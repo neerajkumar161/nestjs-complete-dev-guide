@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Patch,
@@ -43,7 +42,6 @@ export class ReportsController {
 
   @Get()
   getEstimate(@Query() query: GetEstimateDto) {
-    console.log(query)
     return this.reportsService.getEstimate(query)
   }
 
@@ -51,5 +49,4 @@ export class ReportsController {
   findOne(@Param('id') id: string) {
     return this.reportsService.findOne(+id)
   }
-
 }
