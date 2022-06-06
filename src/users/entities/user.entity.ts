@@ -20,6 +20,9 @@ export class User {
   @Column()
   name: string
 
+  @Column({ default: true })
+  admin: boolean
+
   @Column()
   // @Exclude()
   password: string

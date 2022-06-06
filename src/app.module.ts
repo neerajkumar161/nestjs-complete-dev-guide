@@ -7,8 +7,10 @@ import { env } from 'process'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { Report } from './reports/entities/report.entity'
+import { ReportsController } from './reports/reports.controller'
 import { ReportsModule } from './reports/reports.module'
 import { User } from './users/entities/user.entity'
+import { CurrentUserMiddleware } from './users/middlewares/current-user.middleware'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -24,7 +26,7 @@ import { UsersModule } from './users/users.module'
       useFactory: (config: ConfigService) => ({
         type: 'sqlite',
         database: config.get<string>('DB_NAME'),
-        entities: [User, Report],
+        entities: [User, Report, '${rootDir}/entities/**/*.{js,ts}'],
         synchronize: true
         // dropSchema: config.get<string>('DB_NAME') == 'test' ? true : false
       })

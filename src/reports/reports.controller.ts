@@ -6,15 +6,18 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards
 } from '@nestjs/common'
+import { AdminGuard } from 'src/guards/admin.guard'
 import { AuthGuard } from 'src/guards/auth.guard'
 import { Serialize } from 'src/interceptors/serialize.interceptor'
 import { CurrentUser } from 'src/users/decorators/current-user.decorator'
 import { User } from 'src/users/entities/user.entity'
+import { ApproveReportDto } from './dto/approve-report.dto'
 import { CreateReportDto } from './dto/create-report.dto'
+import { GetEstimateDto } from './dto/get-estimate.dto'
 import { ReportDto } from './dto/report.dto'
-import { UpdateReportDto } from './dto/update-report.dto'
 import { ReportsService } from './reports.service'
 
 @Controller('reports')
@@ -28,9 +31,20 @@ export class ReportsController {
     return this.reportsService.create(createReportDto, user)
   }
 
+  @Patch(':id')
+  @UseGuards(AdminGuard)
+  // @Serialize(ReportDto)
+  approveReport(
+    @Param('id') id: string,
+    @Body() approveReportDto: ApproveReportDto
+  ) {
+    return this.reportsService.approveReport(+id, approveReportDto)
+  }
+
   @Get()
-  findAll() {
-    return this.reportsService.findAll()
+  getEstimate(@Query() query: GetEstimateDto) {
+    console.log(query)
+    return this.reportsService.getEstimate(query)
   }
 
   @Get(':id')
@@ -38,13 +52,4 @@ export class ReportsController {
     return this.reportsService.findOne(+id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReportDto: UpdateReportDto) {
-    return this.reportsService.update(+id, updateReportDto)
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reportsService.remove(+id)
-  }
 }

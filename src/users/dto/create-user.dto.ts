@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from 'class-validator'
+import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator'
 import { User } from '../entities/user.entity'
 
 export class CreateUserDto implements Partial<User> {
@@ -10,4 +10,8 @@ export class CreateUserDto implements Partial<User> {
 
   @IsString()
   password: string
+
+  @IsOptional()
+  @IsBoolean()
+  admin: boolean
 }

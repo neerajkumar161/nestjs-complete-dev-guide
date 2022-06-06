@@ -1,5 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types'
-import { Expose, Transform } from 'class-transformer'
+import { Exclude, Expose, Transform } from 'class-transformer'
+import { User } from 'src/users/entities/user.entity'
 import { Report } from '../entities/report.entity'
 
 export class ReportDto extends PartialType(Report) {
@@ -27,7 +28,16 @@ export class ReportDto extends PartialType(Report) {
   @Expose()
   mileage: number
 
-  @Transform(({ obj }) => obj.user.id) // return the user.id and pass to userId
+  @Exclude()
+  user?: User
+
+  @Transform(({ obj }) => {
+    console.log({ obj })
+    return obj.user.id
+  }) // return the user.id and pass to userId
   @Expose()
   userId: number
+
+  @Expose()
+  approved: boolean
 }

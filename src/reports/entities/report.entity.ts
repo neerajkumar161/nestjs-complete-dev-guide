@@ -27,9 +27,12 @@ export class Report {
   @Column()
   mileage: number
 
-  @Column({ default: true })
-  isActive: boolean
-
   @ManyToOne(() => User, (user) => user.reports)
   user: User
+
+  @Column({ default: false })
+  approved: boolean
+
+  @Column({ default: true })
+  isActive: boolean
 }
