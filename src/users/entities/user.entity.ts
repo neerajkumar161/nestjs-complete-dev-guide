@@ -1,9 +1,11 @@
+import { Report } from 'src/reports/entities/report.entity'
 import {
   AfterInsert,
   AfterRemove,
   AfterUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm'
 
@@ -24,6 +26,9 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean
+
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[]
 
   // Hooks
   @AfterInsert()
