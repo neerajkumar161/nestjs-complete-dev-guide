@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types'
 import { Exclude, Expose, Transform } from 'class-transformer'
-import { User } from 'src/users/entities/user.entity'
+import { User } from '../../users/entities/user.entity'
 import { Report } from '../entities/report.entity'
 
 export class ReportDto extends PartialType(Report) {
